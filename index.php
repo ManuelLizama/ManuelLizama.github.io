@@ -1,1 +1,1 @@
-<? php include_once("Demo_Automatas.html") ?>
+<? php include_once("index.html") ?>
