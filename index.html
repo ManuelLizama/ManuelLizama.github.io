@@ -1,185 +1,128 @@
+<!DOCTYPE HTML>
+<!--
+	Big Picture by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<link rel="shortcut icon" href="assets/favicon.ico" />
+
 <html>
-  <head>
-  	
-  	<!-- Theme Made By www.w3schools.com - No Copyright -->
-  <title>Demo Automatas</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<head>
+		<title>Manuel Lizama</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" 
-              type="text/javascript">
-   </script>
-   <script type="text/javascript">
-      $(document).ready(function() {
-         var q='PREFIX dcterms: <http://purl.org/dc/terms/>\
-				PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
-				PREFIX dbo: <http://dbpedia.org/ontology/>\
-				PREFIX dbr: <http://dbpedia.org/resource/>\
-                \
-				SELECT distinct ?band ?nombreband ?img ?des ?web\
-				WHERE{\
-				{\
-		         ?band dcterms:subject   <http://dbpedia.org/resource/Category:Grunge_musical_groups> . \
-		         ?band rdfs:label ?nombreband .\
-		         ?band <http://xmlns.com/foaf/0.1/homepage> ?web .\
-		         ?band dbo:abstract ?des .\
-                 ?band dbo:thumbnail ?img .\
-                 FILTER (LANG(?nombreband ) = "es" && LANG(?des) = "es")\
-      			}\
-      			UNION{\
-				 ?band dbo:genre   dbr:Progressive_rock . \
-				 ?band dbo:background "group_or_band" .\
-		         ?band rdfs:label ?nombreband .\
-		         ?band <http://xmlns.com/foaf/0.1/homepage> ?web .\
-		         ?band dbo:abstract ?des .\
-                 ?band dbo:thumbnail ?img .\
-                        FILTER (LANG(?nombreband ) = "es" && LANG(?des) = "es")\
-      			}\
-      			}\
-				order by ?band';
-      $.ajax({
-           dataType: 'jsonp',
-           data: {
-              query: q,
-              format: 'application/sparql-results+json'
-              },
-           url: 'http://dbpedia.org/sparql',
-           success: function(data){
-            $(data.results.bindings).each(function(i, item){
-              $("#results").append("<tr>\
-                                    <td><p><span class='glyphicon glyphicon-music'></span>" + item.nombreband.value+ "</p></td>\
-                                    <td><a href='"+item.band.value+"' class='uri btn btn-primary'>URI</a></td>\
-									<td>\
-									<a id='modal-"+i+"' href='#modal-container-"+i+"' role='button' class='btn btn-warning' data-toggle='modal'><span class='glyphicon glyphicon-picture'></span> Ver Imagen</a>\
-									<div class='modal fade' id='modal-container-"+i+"' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>\
-											<div class='modal-dialog'>\
-												<div class='modal-content'>\
-													<div class='modal-header'>\
-														<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>\
-															×\
-														</button>\
-														<h4 class='modal-title' id='myModalLabel'>\
-															"+item.nombreband.value+"\
-														</h4>\
-													</div>\
-													<div class='modal-body'>\
-														<a href="+item.img.value+"><img src="+item.img.value+"></a>\
-													</div>\
-													<div class='modal-footer'>\
-														<button type='button' class='btn btn-default' data-dismiss='modal'>\
-															Cerrar\
-														</button> \
-													</div>\
-												</div>\
-											</div>\
-										</div>\
-									</td> \
-									\
-									\
-									\
-									\
-									<td>\
-									<a id='modal-"+i+"' href='#modal-des-container-"+i+"' role='button' class='btn btn-danger' data-toggle='modal'><span class='glyphicon glyphicon-info-sign'></span> Leer descripcion</a>\
-									<div class='modal fade' id='modal-des-container-"+i+"' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>\
-											<div class='modal-dialog'>\
-												<div class='modal-content'>\
-													<div class='modal-header'>\
-														<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>\
-															×\
-														</button>\
-														<h4 class='modal-title' id='myModalLabel'>\
-															"+item.nombreband.value+"\
-														</h4>\
-													</div>\
-													<div class='modal-body'>\
-														"+item.des.value+"\
-													</div>\
-													<div class='modal-footer'>\
-														<button type='button' class='btn btn-default' data-dismiss='modal'>\
-															Cerrar\
-														</button> \
-													</div>\
-												</div>\
-											</div>\
-										</div>\
-										</td>\
-										\
-										\
-										<td><a href="+item.web.value+" class='btn btn-info'><span class='glyphicon glyphicon-link'></span> Link</a> </td>\
-                                    </tr>");
-            });
-           }
-         });
-      });
-    </script>
-    <style>
-  		body  {
-    	background-color: lightgray;
-    	font-family: "Raleway", sans-serif;
-		}
-  </style>
-  </head>
- 
-  <body>
-	<div class="carousel slide" id="carousel-912025">
-				<ol class="carousel-indicators">
-					<li class="active" data-slide-to="0" data-target="#carousel-912025">
-					</li>
-					<li data-slide-to="1" data-target="#carousel-912025">
-					</li>
-				</ol>
-				<div class="carousel-inner">
-					<div class="item active">
-						<img alt="Grunge" class= img-responsive src="http://static-cms.legacy.com/sites/default/files/styles/hero_detail/public/90s-music-cobain-getty-hero-1600.jpg?itok=-o-yR-u8" >
-						<div class="carousel-caption">
-							<h4>
-								Grunge
-							</h4>
-							<p>
-								El grunge, en ocasiones conocido como sonido de Seattle, es un subgénero del rock alternativo influido por el punk, el hardcore punk, el noise rock, el hard rock y con estructuras cercanas al rock clásico.
-							</p>
-						</div>
+		<!-- Header -->
+			<header id="header">
+				<h1>Manuel Lizama</h1>
+				<nav>
+					<ul>
+						<li><a href="#intro">Intro</a></li>
+						<li><a href="#one">Lo que hago</a></li>
+						<li><a href="#two">Quien soy</a></li>
+						<li><a href="#work">Intereses</a></li>
+						<li><a href="#contact">Contáctame!</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Intro -->
+			<section id="intro" class="main style1 dark fullscreen">
+				<div class="content">
+					<header>
+						<h2>¡Hola!</h2>
+					</header>
+					<p>Bienvenido, soy <strong>Manuel Lizama</strong>, un joven en busca de aprender y experimentar en el mundo de la informatica</p>
+					<footer>
+						<a href="#one" class="button style2 down">Mas</a>
+					</footer>
+				</div>
+			</section>
+
+		<!-- One -->
+			<section id="one" class="main style2 right dark fullscreen">
+				<div class="content box style2">
+					<header>
+						<h2>Lo que hago</h2>
+					</header>
+					<p>Soy estudiante de la carrera Ingenieria en computacion e informatica de la Universidad Andres Bello, buscando practica actualmente</p>
+				</div>
+				<a href="#two" class="button style2 down anchored">Siguiente</a>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="main style2 left dark fullscreen">
+				<div class="content box style2">
+					<header>
+						<h2>Quien soy</h2>
+					</header>
+					<p>Tengo 27 años, me gusta aprender sobre nuevas herramientas y tecnicas, me gusta la música, el arte, la cultura en general, el cine, las series, la animacion, robotica, automatización,  entre otras</p>
+				</div>
+				<a href="#work" class="button style2 down anchored">Siguiente</a>
+			</section>
+
+		<!-- Work -->
+			<section id="work" class="main style3 primary">
+				<div class="content">
+					<header>
+						<h2>Intereses</h2>
+						<p>Colaborar en proyectos, participar en equipos de trabajo, comenzar en el ambito laboral, aprender sobre nuevas tecnologias de desarrollo</p>
+					</header>
+
+				</div>
+			</section>
+
+		<!-- Contact -->
+			<section id="contact" class="main style3 secondary">
+				<div class="content">
+					<header>
+						<h2>Contacto</h2>
+						<p>LLena el siguiente formulario para ponernos en contacto</p>
+					</header>
+					<div class="box">
+						<form method="post" action="#">
+							<div class="field half first"><input type="text" name="nombre" placeholder="Nombre" /></div>
+							<div class="field half"><input type="email" name="email" placeholder="Email" /></div>
+							<div class="field"><textarea name="mensaje" placeholder="Mensaje" rows="6"></textarea></div>
+							<ul class="actions">
+								<li><input type="submit" value="Enviar" /></li>
+							</ul>
+						</form>
 					</div>
-					<div class="item">
-						<img alt="Rock Progresivo" src="http://www.alexbattles.com/wp-content/uploads/2017/07/DSC_7116-2-1600x500.jpg">
-						<div class="carousel-caption">
-							<h4>
-								Rock Progresivo
-							</h4>
-							<p>
-								El rock progresivo, también conocido como prog rock o prog, es un subgénero de la música rock, que se originó en el Reino Unido, con posterior desarrollo en Alemania, España, Italia y Francia, durante mediados y finales de los años 60 y 70. Se desarrolló a partir del rock psicodélico y se originó, al igual que el art rock, como un intento de dar mayor peso y credibilidad artística a la música rock.
-							</p>
-						</div>
-					</div>
-				</div> <a class="left carousel-control" href="#carousel-912025" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-912025" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-			</div>
+				</div>
+			</section>
 
-  	<div class="container ">
-  		<div class="row">
-  			<h1>Lista de Bandas Grunge y Prog</h1>
-  			<table class="table table-condensed table-responsive table-hover" id="results" style="float: left">
-    		<tr class="default"><th>Nombre</th><th>Uri DBPedia</th><th>Imagen</th><th>Descripcion</th><th>Sitio web</th></tr>
-    		</table>
-    	</div>
-    </div>
+		<!-- Footer -->
+			<footer id="footer">
 
-    <footer class="w3-container w3-padding-16">
-		  <h2>Manuel Lizama</h2>
-		  <h3>Teoria automatas y lenguajes formales</h3>
-		  <p>Ingenieria en Computacion e Informatica</p>
-		  <a href="https://www.unab.cl" target="_blank">Universidad Andres Bello</a>
-		  <div style="position:relative;bottom:55px;" class="w3-tooltip w3-right">
-		    <span class="w3-text w3-theme-light w3-padding">Ir al inicio</span>    
-		    <a class="w3-text-white" href="#carousel-912025"><span class="w3-xlarge">
-		    <i class="fa fa-chevron-circle-up"></i></span></a>
-		  </div>
-	</footer>
-  </body>
+				<!-- Icons -->
+					<ul class="actions">
+						<li><a href="https://github.com/ManuelLizama" class="icon fa-github"><span class="label">Github</span></a>
+							<li><a href="https://ManuelLizama.github.io" class="icon fa-globe"><span class="label">Github</span></a></li>
+					</ul>
+
+				<!-- Menu -->
+					<ul class="menu">
+						<li>&copy; Manuel Lizama</li><li>Diseño: <a href="https://html5up.net">HTML5 UP</a></li>
+					</ul>
+
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
 </html>
-
