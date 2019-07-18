@@ -16,6 +16,20 @@
 		<script src="https://smtpjs.com/v3/smtp.js"></script>
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<script>
+			function calcularEdad() {
+    			var hoy = new Date();
+    			var cumpleanos = new Date(1990,08,26);
+    			var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    			var m = hoy.getMonth() - cumpleanos.getMonth();
+
+    			if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        			edad--;
+	    		}
+
+   			 return edad;
+			}
+		</script>
 	</head>
 	<body>
 
@@ -63,7 +77,7 @@
 					<header>
 						<h2>Quien soy</h2>
 					</header>
-					<p>Tengo 27 años, me gusta aprender sobre nuevas herramientas y tecnicas, me gusta la música, el arte, la cultura en general, el cine, las series, la animacion, robotica, automatización,  entre otras</p>
+					<p>Tengo <p>calcularEdad(fecha)</p>  años, me gusta aprender sobre nuevas herramientas y tecnicas, me gusta la música, el arte, la cultura en general, el cine, las series, la animacion, robotica, automatización,  entre otras</p>
 				</div>
 				<a href="#work" class="button style2 down anchored">Siguiente</a>
 			</section>
